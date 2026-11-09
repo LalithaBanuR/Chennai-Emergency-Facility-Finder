@@ -6,7 +6,7 @@ const DB_HOST = 'localhost';
 const DB_PORT = '5432';
 const DB_NAME = 'chennai_emergency';
 const DB_USER = 'postgres';
-const DB_PASSWORD = 'user123';
+const DB_PASSWORD = 'password';
 
 function db(): PgSql\Connection
 {
