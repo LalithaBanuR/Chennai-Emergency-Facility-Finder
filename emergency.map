@@ -1,0 +1,238 @@
+MAP
+    NAME "Chennai Emergency Facilities"
+    STATUS ON
+
+    SIZE 900 650
+
+    EXTENT 80.05 12.85 80.35 13.25
+    UNITS DD
+
+    IMAGETYPE PNG
+    IMAGECOLOR 245 245 245
+
+    WEB
+        IMAGEPATH "C:/ms4w/tmp/ms_tmp/"
+        IMAGEURL "/ms_tmp/"
+
+        METADATA
+            "wms_title" "Chennai Emergency Facilities"
+            "wms_srs" "EPSG:4326"
+            "wms_enable_request" "*"
+        END
+    END
+
+    PROJECTION
+        "init=epsg:4326"
+    END
+
+
+    #
+    # Generic inline symbols
+    #
+
+    SYMBOL
+        NAME "circle"
+        TYPE ELLIPSE
+        FILLED TRUE
+        POINTS
+            1 1
+        END
+    END
+
+    SYMBOL
+        NAME "square"
+        TYPE VECTOR
+        FILLED TRUE
+        POINTS
+            0 0
+            0 1
+            1 1
+            1 0
+            0 0
+        END
+    END
+
+    SYMBOL
+        NAME "triangle"
+        TYPE VECTOR
+        FILLED TRUE
+        POINTS
+            0 0
+            1 0
+            0.5 1
+            0 0
+        END
+    END
+
+    SYMBOL
+        NAME "diamond"
+        TYPE VECTOR
+        FILLED TRUE
+        POINTS
+            0.5 0
+            1 0.5
+            0.5 1
+            0 0.5
+            0.5 0
+        END
+    END
+
+
+    #
+    # Emergency facilities layer
+    #
+
+    LAYER
+        NAME "emergency_facilities"
+        TYPE POINT
+        STATUS ON
+
+        CONNECTIONTYPE POSTGIS
+
+        CONNECTION "host=localhost port=5432 dbname=chennai_emergency user=postgres password=user123"
+
+        DATA "geom FROM public.emergency_facilities USING UNIQUE id USING SRID=4326"
+
+        CLASSITEM "service_type"
+
+        PROJECTION
+            "init=epsg:4326"
+        END
+
+
+        #
+        # Hospital
+        #
+
+        CLASS
+            NAME "Hospital"
+            EXPRESSION "Hospital"
+
+            STYLE
+                SYMBOL "circle"
+                SIZE 18
+                COLOR 210 30 30
+                OUTLINECOLOR 255 255 255
+                WIDTH 1
+            END
+
+            LABEL
+                TEXT ([name])
+                TYPE BITMAP
+                SIZE 10
+                COLOR 0 0 0
+                POSITION AUTO
+                BUFFER 2
+            END
+        END
+
+
+        #
+        # Police station
+        #
+
+        CLASS
+            NAME "Police Station"
+            EXPRESSION "Police"
+
+            STYLE
+                SYMBOL "square"
+                SIZE 17
+                COLOR 20 80 210
+                OUTLINECOLOR 255 255 255
+                WIDTH 1
+            END
+
+            LABEL
+                TEXT ([name])
+                TYPE BITMAP
+                SIZE 10
+                COLOR 0 0 0
+                POSITION AUTO
+                BUFFER 2
+            END
+        END
+
+
+        #
+        # Fire station
+        #
+
+        CLASS
+            NAME "Fire Station"
+            EXPRESSION "Fire Station"
+
+            STYLE
+                SYMBOL "triangle"
+                SIZE 19
+                COLOR 240 110 0
+                OUTLINECOLOR 255 255 255
+                WIDTH 1
+            END
+
+            LABEL
+                TEXT ([name])
+                TYPE BITMAP
+                SIZE 10
+                COLOR 0 0 0
+                POSITION AUTO
+                BUFFER 2
+            END
+        END
+
+
+        #
+        # Ambulance
+        #
+
+        CLASS
+            NAME "Ambulance"
+            EXPRESSION "Ambulance"
+
+            STYLE
+                SYMBOL "diamond"
+                SIZE 18
+                COLOR 150 40 180
+                OUTLINECOLOR 255 255 255
+                WIDTH 1
+            END
+
+            LABEL
+                TEXT ([name])
+                TYPE BITMAP
+                SIZE 10
+                COLOR 0 0 0
+                POSITION AUTO
+                BUFFER 2
+            END
+        END
+
+
+        #
+        # Pharmacy
+        #
+
+        CLASS
+            NAME "Pharmacy"
+            EXPRESSION "Pharmacy"
+
+            STYLE
+                SYMBOL "circle"
+                SIZE 14
+                COLOR 20 160 70
+                OUTLINECOLOR 255 255 255
+                WIDTH 1
+            END
+
+            LABEL
+                TEXT ([name])
+                TYPE BITMAP
+                SIZE 10
+                COLOR 0 0 0
+                POSITION AUTO
+                BUFFER 2
+            END
+        END
+
+    END
+END
